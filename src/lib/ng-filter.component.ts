@@ -1,14 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 @Component({
-  selector: 'lib-ng-filter',
-  template: `
-    <p>
-      ng-filter works!
-    </p>
-  `,
-  styles: [
-  ]
+  selector: 'ng-filter',
+  templateUrl: './ng-filter.component.html',
+  styleUrls: ['./ng-filter.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class NgFilterComponent implements OnInit {
 
