@@ -1,61 +1,42 @@
 <div class="p-4 h-100">
-    <div class="scroll">
-      <p class="text-muted text-small">Status</p>
-      <ul class="list-unstyled mb-5">
-        <li class="active">
-          <a href="javascript:;">
-            <i class="simple-icon-refresh"></i>
-            Pending Tasks
-            <span class="float-right">12</span>
-          </a>
-        </li>
-        <li>
-          <a href="javascript:;">
-            <i class="simple-icon-check"></i>
-            Completed Tasks
-            <span class="float-right">24</span>
-          </a>
-        </li>
-      </ul>
-      <p class="text-muted text-small">Categories</p>
-      <ul class="list-unstyled mb-5">
-        <li>
-          <div class="custom-control custom-checkbox mb-2">
-            <input type="checkbox" class="custom-control-input" id="category1">
-            <label class="custom-control-label" for="category1">Flexbox</label>
+  <div class="scroll">
+      <div *ngFor="let field of fieldsArr; let j = index;">
+          <p class="text-muted text-small">{{ field.display_name }}</p>
+          <div *ngIf="field.type == 'checkbox'">
+              <ul class="list-unstyled mb-5">
+                  <div *ngFor="let oneValue of field.values ; let i = index; ">
+                      <li>
+                          <div class="custom-control custom-checkbox mb-2">
+                              <input (change)="onCheckboxSelected($event, j)" name="{{field.field}}" value="{{ oneValue.value }}" [checked]="oneValue.isChecked" type="checkbox" class="custom-control-input" id="{{field.field}}_{{i}}">
+                              <label class="custom-control-label" for="{{field.field}}_{{i}}">{{ oneValue.value }}</label>
+                          </div>
+                      </li>
+                  </div>
+              </ul>
           </div>
-        </li>
-        <li>
-          <div class="custom-control custom-checkbox mb-2">
-            <input type="checkbox" class="custom-control-input" id="category2">
-            <label class="custom-control-label" for="category2">Sass</label>
+          <div *ngIf="field.type == 'radio'" id="radio-box">
+              <div *ngFor="let pattern of field.values; let i = index;">
+                  <div class="mb-4" id="radio">
+                      <div class="custom-control custom-radio">
+                        <input type="radio" id="{{field.field}}_{{i}}" name="{{field.field}}" class="custom-control-input" (change)="onRadioSelected(field.field, j,i)" value="{{ pattern }} " [(ngModel)]="field.currentSelectedRadio">
+                        <label class="custom-control-label" for="{{field.field}}_{{i}}">{{ pattern }}</label>
+                      </div>
+                    </div>
+              </div>
           </div>
-        </li>
-        <li>
-          <div class="custom-control custom-checkbox ">
-            <input type="checkbox" class="custom-control-input" id="category3">
-            <label class="custom-control-label" for="category3">React</label>
+          <div *ngIf="field.type == 'slider'">
+              <div class="form-group" id="slider">
+                  <form [formGroup]="sliderRangeFormGroup">
+                    <nouislider  [connect]="true" [min]="500" [max]="1500" [tooltips]="true" [step]="10" [formControl]="sliderRangeFormGroup.controls.range"></nouislider>
+                  </form>
+              </div>
           </div>
-        </li>
-      </ul>
-      <p class="text-muted text-small">Labels</p>
-      <div>
-        <p class="d-sm-inline-block mb-1">
-          <a href="javascript:;">
-            <span class="badge badge-pill badge-outline-primary mb-1 mr-1">NEW FRAMEWORK</span>
-          </a>
-        </p>
-
-        <p class="d-sm-inline-block mb-1">
-          <a href="javascript:;">
-            <span class="badge badge-pill badge-outline-theme-3 mb-1 mr-1">EDUCATION</span>
-          </a>
-        </p>
-        <p class="d-sm-inline-block  mb-1">
-          <a href="javascript:;">
-            <span class="badge badge-pill badge-outline-secondary mb-1 mr-1">PERSONAL</span>
-          </a>
-        </p>
+          <div *ngIf="field.type == 'date'">
+              <div class="form-group mb-3" style="height: 100%; overflow: auto;">
+                  <!-- <label>{{ 'form-components.date-range' | translate }}</label> -->
+                  <input class="form-control" #drp="bsDaterangepicker" bsDaterangepicker [container]="'html'" [(ngModel)]="bsRangeValue">
+                </div>
+          </div>
       </div>
-    </div>
   </div>
+</div>

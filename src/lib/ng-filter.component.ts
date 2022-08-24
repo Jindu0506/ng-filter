@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Filter } from './filter';
 
 @Component({
   selector: 'ng-filter',
@@ -8,9 +9,18 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class NgFilterComponent implements OnInit {
 
+  @Input() fieldsArr: Filter[];
+
   constructor() { }
 
   ngOnInit(): void {
+    console.log('library :',this.fieldsArr)
   }
+
+  onCheckboxSelected(event, j) {   
+    console.log('checkbox selected :',event, j)
+  }
+
+  
 
 }

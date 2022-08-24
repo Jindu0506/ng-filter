@@ -5,3 +5,4 @@
 export * from './lib/ng-filter.service';
 export * from './lib/ng-filter.component';
 export * from './lib/ng-filter.module';
+export * from './lib/filter'
